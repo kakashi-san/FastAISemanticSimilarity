@@ -1,0 +1,153 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Untitled7.ipynb",
+      "provenance": [],
+      "collapsed_sections": [],
+      "authorship_tag": "ABX9TyMtCvcYgkH2QVBBq8dAXrAx",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/kakashi-san/GitTest/blob/master/lstm_forecasting\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "YX3kRkF46wmI"
+      },
+      "source": [
+        "import optuna"
+      ],
+      "execution_count": 1,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "su2lF4bZ8Y0z"
+      },
+      "source": [
+        "import os\n",
+        "from driver import Driver\n",
+        "path_to_data = './data/adani.csv'\n",
+        "params = {}\n",
+        "params['n_steps']       = 7\n",
+        "params['n_components']  = 3\n",
+        "params['val_split']     = 0.25\n",
+        "params['factor']        = 0.01\n",
+        "params['patience']      = 40\n",
+        "params['learning_rate'] = 0.001\n",
+        "params['min_delta']     = 0.1\n",
+        "params['epochs']        = 4\n",
+        "params['batch_size']    = 16\n",
+        "params['monitor_param'] = 'val_loss'"
+      ],
+      "execution_count": 2,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "xYrlbaty9YO3",
+        "outputId": "81604ef6-a70e-48d5-96b2-0233aa209636"
+      },
+      "source": [
+        "driver = Driver(path_to_data = path_to_data, server_space='subdir', server_name='file', params=params)\n",
+        "driver._drive()\n",
+        "driver.monitored_param"
+      ],
+      "execution_count": 3,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "SCALED DATA SUCCESSFULLY\n",
+            "X shape before:  (359, 7, 1)\n",
+            "X shape after:  (359, 7, 1)\n",
+            "Xshape before fitting (359, 7, 1)\n",
+            "yshape before fitting (359, 1)\n",
+            "[2.677199363708496, 2.312499761581421, 1.736602783203125, 0.7831839919090271]\n",
+            "SCALED DATA SUCCESSFULLY\n",
+            "X shape before:  (359, 7, 1)\n",
+            "X shape after:  (359, 7, 1)\n",
+            "Xshape before fitting (359, 7, 1)\n",
+            "yshape before fitting (359, 1)\n",
+            "SCALED DATA SUCCESSFULLY\n",
+            "X shape before:  (359, 7, 1)\n",
+            "X shape after:  (359, 7, 1)\n",
+            "Xshape before fitting (359, 7, 1)\n",
+            "yshape before fitting (359, 1)\n"
+          ],
+          "name": "stdout"
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "0.7831839919090271"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 3
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "6twB54tl9jA9",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "cc193932-3092-4197-b3a9-2296e632e88f"
+      },
+      "source": [
+        "print(driver.monitored_param)"
+      ],
+      "execution_count": 4,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "0.7831839919090271\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "SET2lksOMKek"
+      },
+      "source": [
+        ""
+      ],
+      "execution_count": 4,
+      "outputs": []
+    }
+  ]
+}
